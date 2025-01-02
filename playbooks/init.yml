@@ -15,6 +15,7 @@
       loop: 
           - pgdev/ghostty
           - sneexy/zen-browser
+      become: true
     
     - name: Install Ghostty
       ansible.builtin.dnf:
