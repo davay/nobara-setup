@@ -10,10 +10,12 @@
     
     - name: "Enable Fedora COPRs (chroot: fedora-{{ fedora_version.stdout }}-x86_64)"
       community.general.copr:
-        name: 
+        name: "{{ item }}"
+        chroot: "fedora-{{ fedora_version.stdout }}-x86_64"
+      loop: 
           - pgdev/ghostty
           - sneexy/zen-browser
-        chroot: "fedora-{{ fedora_version.stdout }}-x86_64"
+      state: enabled
     
     - name: Install Ghostty
       ansible.builtin.dnf:
