@@ -47,9 +47,15 @@
         dest: /home/{{ ansible_user_id }}/powerlevel10k
         depth: 1
 
+    - name: Change user shell to Zsh 
+      ansible.builtin.user:
+        name: "{{ ansible_user_id }}"
+        shell: /bin/zsh
+
     - name: Install Zen Browser
       ansible.builtin.dnf: 
         name: zen-browser
         state: present
       become: true
+
 
