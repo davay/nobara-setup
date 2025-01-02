@@ -46,3 +46,12 @@
         name: "{{ ansible_user_id }}"
         shell: /bin/zsh
       become: true
+
+    - name: Install gnome-extensions-cli
+      ansible.builtin.pip:
+        name: gnome-extensions-cli
+        extra_args: --user --upgrade
+
+    - name: Install PaperWM
+      ansible.builtin.command:
+        cmd: gext install "PaperWM@jtaala" && gext enable "PaperWM@jtaala"
