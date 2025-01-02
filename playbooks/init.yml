@@ -17,9 +17,9 @@
           - sneexy/zen-browser
       become: true
     
-    - name: Install Ghostty
+    - name: Install DNF packages
       ansible.builtin.dnf:
-        name: {{ item }}
+        name: "{{ item }}"
         state: present
       loop: 
         - ghostty
