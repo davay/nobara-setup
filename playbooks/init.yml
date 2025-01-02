@@ -19,20 +19,14 @@
     
     - name: Install Ghostty
       ansible.builtin.dnf:
-        name: ghostty
+        name: {{ item }}
         state: present
-      become: true
-
-    - name: Install Neovim
-      ansible.builtin.dnf:
-        name: neovim
-        state: present
-      become: true
-
-    - name: Install Zsh
-      ansible.builtin.dnf:
-        name: zsh
-        state: present
+      loop: 
+        - ghostty
+        - neovim
+        - zsh
+        - zen-browser
+        - lsd
       become: true
 
     - name: Install Oh-My-Zsh
@@ -52,11 +46,3 @@
         name: "{{ ansible_user_id }}"
         shell: /bin/zsh
       become: true
-
-    - name: Install Zen Browser
-      ansible.builtin.dnf: 
-        name: zen-browser
-        state: present
-      become: true
-
-
