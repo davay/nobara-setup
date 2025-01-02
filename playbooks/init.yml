@@ -1,0 +1,28 @@
+---
+- name: Initialize system after fresh install
+  hosts: localhost
+  become: true
+  tasks:
+    - name: Get Fedora version
+      command: rpm -E %fedora
+      register: fedora_version
+    
+    - name: "Enable Fedora COPRs (chroot: fedora-{{ fedora_version.stdout }}-x86_64)"
+      community.general.copr:
+        name: pgdev/ghostty
+        chroot: "fedora-{{ fedora_version.stdout }}-x86_64"
+    
+    - name: Install Ghostty
+      ansible.builtin.dnf:
+        name: ghostty
+        state: present
+
+    - name: Install Neovim
+      ansible.builtin.dnf:
+        name: neovim
+        state: present
+
+    - name: Install Zsh
+      ansible.builtin.dnf:
+        name: zsh
+        state: present
