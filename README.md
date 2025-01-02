@@ -11,7 +11,7 @@ Includes:
 ## Quick Start
 
 ```
-sudo ./setup.sh
+./setup.sh
 ```
 
 ## Ports
