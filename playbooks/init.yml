@@ -51,6 +51,7 @@
       ansible.builtin.user:
         name: "{{ ansible_user_id }}"
         shell: /bin/zsh
+      become: true
 
     - name: Install Zen Browser
       ansible.builtin.dnf: 
