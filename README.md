@@ -11,8 +11,7 @@ Includes:
 ## Quick Start
 
 ```
-sudo dnf install -y ansible
-git clone https://github.com/davay/nobara-setup.git ~/Repos/nobara-setup
+sudo ./setup.sh
 ```
 
 ## Ports
