@@ -1,11 +1,12 @@
 ---
-- name: Initialize system after fresh install
+- name: Initialize system
   hosts: localhost
   become: true
   tasks:
     - name: Get Fedora version
       command: rpm -E %fedora
       register: fedora_version
+      changed_when: false
     
     - name: "Enable Fedora COPRs (chroot: fedora-{{ fedora_version.stdout }}-x86_64)"
       community.general.copr:
@@ -26,3 +27,15 @@
       ansible.builtin.dnf:
         name: zsh
         state: present
+
+    - name: Install Oh My Zsh
+      ansible.builtin.git:
+      repo: https://github.com/ohmyzsh/ohmyzsh.git
+      dest: ~/.oh-my-zsh
+      depth: 1
+
+    - name: Install Powerlevel10k
+      git: 
+        repo: https://github.com/romkatv/powerlevel10k.git
+        dest: ~/powerlevel10k
+        depth: 1
