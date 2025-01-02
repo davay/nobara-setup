@@ -27,6 +27,7 @@
         - zsh
         - zen-browser
         - lsd
+        - python3
       become: true
 
     - name: Install Oh-My-Zsh
