@@ -21,16 +21,19 @@
       ansible.builtin.dnf:
         name: ghostty
         state: present
+      become: true
 
     - name: Install Neovim
       ansible.builtin.dnf:
         name: neovim
         state: present
+      become: true
 
     - name: Install Zsh
       ansible.builtin.dnf:
         name: zsh
         state: present
+      become: true
 
     - name: Install Oh-My-Zsh
       ansible.builtin.git:
@@ -48,4 +51,5 @@
       ansible.builtin.dnf: 
         name: zen-browser
         state: present
+      become: true
 
