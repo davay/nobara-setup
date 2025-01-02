@@ -1,0 +1,14 @@
+---
+- name: Install general packages
+  hosts: localhost
+  tasks:
+    - name: Enable Fedora COPRs
+      community.general.copr:
+        name: pgdev/ghostty
+    
+    - name: Install Ghostty
+      ansible.builtin.dnf:
+        name: ghostty
+        state: present
+
+    
