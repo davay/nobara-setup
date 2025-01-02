@@ -12,10 +12,10 @@
       community.general.copr:
         name: "{{ item }}"
         chroot: "fedora-{{ fedora_version.stdout }}-x86_64"
+        state: enabled
       loop: 
           - pgdev/ghostty
           - sneexy/zen-browser
-      state: enabled
     
     - name: Install Ghostty
       ansible.builtin.dnf:
