@@ -1,11 +1,10 @@
 - name: Copy dotfiles
   hosts: localhost
-  become: true
   tasks:
   - name: Copy root dotfiles
     ansible.builtin.get_url:
       url: "https://raw.githubusercontent.com/davay/dotfiles/main/{{ item }}"
-      dest: "~/{{ item | basename }}"
+      dest: "/home/{{ ansible_user_id }}/{{ item | basename }}"
     loop:
       - .zshrc
       - .zshrc_portable
