@@ -54,8 +54,20 @@
       ansible.builtin.pip:
         name: gnome-extensions-cli
         extra_args: --user --upgrade
+        
+
+    - name: Download Synergy RPM
+      ansible.builtin.get_url:
+      url: "https://symless.com/synergy/synergy/api/download/synergy-3.2.1-linux-noble-x64.rpm"
+      dest: "/tmp/synergy.rpm"
+
+    - name: Install Synergy package
+      ansible.builtin.dnf:
+        name: "/tmp/synergy.rpm"
+        state: present
+      become: true
 
     - name: Install PaperWM
       ansible.builtin.command:
-        # get the string from 'gext search paperwm'
         cmd: gext install "paperwm@paperwm.github.com" && gext enable "paperwm@paperwm.github.com"
+
