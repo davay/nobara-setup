@@ -14,6 +14,10 @@ Includes:
 ./setup.sh
 ```
 
+Then: 
+
+1. Setup Synergy
+
 ## Ports
 
 | Port | App     |
