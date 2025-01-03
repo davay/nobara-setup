@@ -57,5 +57,6 @@
         
     - name: Install PaperWM
       ansible.builtin.command:
-        cmd: gext install "paperwm@paperwm.github.com" && gext enable "paperwm@paperwm.github.com"
+        cmd: gext install paperwm@paperwm.github.com
+
 
