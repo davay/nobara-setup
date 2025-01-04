@@ -1,6 +1,8 @@
 ---
 - name: Initialize system
   hosts: localhost
+  vars:
+    installed_gnome_extensions: "{{ ansible.builtin.command('gext list).stdout }}"
   tasks:
     - name: Get Fedora version
       ansible.builtin.command:
@@ -77,11 +79,12 @@
         cmd: gext --filesystem install "{{ item }}"
       loop:
         - paperwm@paperwm.github.com
-        - gsconnect@andyholmes.github.io 
+        - gsconnect@andyholmes.github.io
+      when: item not in installed_gnome_extensions
     
     - name: Display logout message
       debug:
-        msg: |
+        msg: |+
           ===========================================
           For GNOME extension changes to take effect,
           please log out and log back in
