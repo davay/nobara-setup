@@ -2,23 +2,29 @@
 - name: Start DuckDNS and other server containers
   hosts: localhost
 
-  environment:   
+  vars: 
+    user: "{{ ansible_user_id }}"
     duckdns_token: "{{ lookup('community.general.onepassword', 'duckdns token', field='token', vault='Personal') }}"
 
   tasks:
+    - name: Create DuckDNS .env file
+      template:
+        src: templates/docker/duckdns/.env.j2
+        dest: /home/{{ user }}/Repos/nobara-setup/templates/docker/duckdns/.env
+
     - name: Deploy DuckDNS
       community.docker.docker_compose_v2:
-        project_src: /home/{{ ansible_user_id }}/Repos/nobara-setup/templates/docker/duckdns
+        project_src: /home/{{ user }}/Repos/nobara-setup/templates/docker/duckdns
         state: present
 
     # TODO: use proper container registry
     - name: Clone da-band
       ansible.builtin.git:
         repo: https://github.com/davay/da-band.git
-        dest: /home/{{ ansible_user_id }}/Repos
+        dest: /home/{{ user }}/Repos
         depth: 1
 
     - name: Deploy da-band API server
       ansible.builtin.shell:
         cmd: ./start.sh
-        chdir: /home/{{ ansible_user_id }}/Repos/da-band/api/
+        chdir: /home/{{ user }}/Repos/da-band/api/
