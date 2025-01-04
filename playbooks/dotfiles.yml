@@ -10,3 +10,5 @@
       - .zshrc_portable
       - .p10k.zsh
       - .gitconfig
+      - .gitconfig_mac
+      - .gitconfig_linux
