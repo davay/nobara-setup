@@ -3,7 +3,7 @@
   hosts: localhost
 
   vars:   
-    duckdns_token: "{{ lookup('community.general.onepassword', 'op://Personal/o7lf4lazzfjnuxgc56sbyke5b4/token') }}"
+    duckdns_token: "{{ lookup('community.general.onepassword', 'duckdns token', field='token', vault='Personal') }}"
 
   tasks:
     - name: Deploy DuckDNS
