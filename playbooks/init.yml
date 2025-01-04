@@ -5,6 +5,7 @@
   vars:
     installed_gnome_extensions: "{{ lookup('pipe', 'gext list') }}"
     fedora_version: "{{ lookup('pipe', 'rpm -E %fedora') }}"
+    user: "{{ ansible_user_id }}"
 
   pre_tasks:
     - name: "Enable Fedora COPRs (chroot: fedora-{{ fedora_version }}-x86_64)"
@@ -73,7 +74,7 @@
 
     - name: Add user to docker group
       ansible.builtin.user:
-        name: "{{ ansible_user_id }}"
+        name: "{{ user }}"
         groups: docker
         append: yes
       become: true
@@ -81,13 +82,13 @@
     - name: Install Oh-My-Zsh
       ansible.builtin.git:
         repo: https://github.com/ohmyzsh/ohmyzsh.git
-        dest: /home/{{ ansible_user_id }}/.oh-my-zsh
+        dest: /home/{{ user }}/.oh-my-zsh
         depth: 1
 
     - name: Install Powerlevel10k
       git: 
         repo: https://github.com/romkatv/powerlevel10k.git
-        dest: /home/{{ ansible_user_id }}/powerlevel10k
+        dest: /home/{{ user }}/powerlevel10k
         depth: 1
 
     - name: Install gnome-extensions-cli
@@ -121,7 +122,7 @@
 
     - name: Change user shell to Zsh 
       ansible.builtin.user:
-        name: "{{ ansible_user_id }}"
+        name: "{{ user }}"
         shell: /bin/zsh
       become: true
 
