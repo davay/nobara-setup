@@ -36,7 +36,7 @@
           gpgkey: https://downloads.1password.com/linux/keys/1password.asc
         - name: nvidia-container-toolkit
           description: NVIDIA Container Toolkit Repository
-          baseurl: https://nvidia.github.io/libnvidia-container/stable/rpm
+          baseurl: https://nvidia.github.io/libnvidia-container/stable/rpm/$basearch
       become: true
     
     - name: Install DNF packages
