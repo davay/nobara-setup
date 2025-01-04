@@ -57,6 +57,7 @@
         - gh
         - nvidia-container-toolkit
         - docker
+        - docker-compose
       become: true
 
     - name: Install Oh-My-Zsh
@@ -116,14 +117,16 @@
     - name: Display final message
       vars:
         msg: |
-             ===========================================
+             ==============================================================================
 
              For GNOME extension changes to take effect,
              please log out and log back in
+  
+             ==============================================================================
 
              NVIDIA Container Toolkit test results:
              {{ nvidia_test.stdout if nvidia_test.stdout is defined else 'Test failed' }}
 
-             ===========================================
+             ==============================================================================
       debug:
         msg: "{{ msg.split('\n') }}"
