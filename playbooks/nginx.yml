@@ -1,6 +1,7 @@
 ---
 - name: Setup NGINX
   hosts: localhost
+  become: true
   vars:
     domain: api.devinl.im
     email: davay@devinl.im
