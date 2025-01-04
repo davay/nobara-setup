@@ -16,6 +16,7 @@ Includes:
 Then: 
 
 - Login to 1Password
+- Setup KDE/GSConnect
 
 ## Ports
 

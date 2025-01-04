@@ -86,12 +86,11 @@
     - name: Display final message
       vars:
         msg: |
-             *******************************************
+             ===========================================
 
              For GNOME extension changes to take effect,
-             
              please log out and log back in
 
-             *******************************************
+             ===========================================
       debug:
         msg: "{{ msg.split('\n') }}"

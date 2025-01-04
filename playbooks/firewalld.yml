@@ -1,0 +1,11 @@
+---
+- name: Setup FirewallD
+  hosts: localhost
+  tasks: 
+    - name: Allow KDE Connect traffic
+      ansible.posix.firewalld:
+        service: kdeconnect
+        zone: public
+        permanent: yes
+        state: enabled 
+        immediate: true
