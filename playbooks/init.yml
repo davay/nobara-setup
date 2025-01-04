@@ -37,6 +37,7 @@
         - name: nvidia-container-toolkit
           description: NVIDIA Container Toolkit Repository
           baseurl: https://nvidia.github.io/libnvidia-container/stable/rpm/$basearch
+          gpgkey: https://nvidia.github.io/libnvidia-container/gpgkey
       become: true
     
     - name: Install DNF packages
