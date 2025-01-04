@@ -1,0 +1,11 @@
+---
+services:
+  duckdns:
+    image: lscr.io/linuxserver/duckdns:latest
+    container_name: duckdns
+    network_mode: host
+    environment:
+      - TZ=America/Los_Angeles
+      - SUBDOMAINS=api
+      - TOKEN=${DUCKDNS_TOKEN}
+    restart: unless-stopped

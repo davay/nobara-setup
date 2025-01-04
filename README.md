@@ -13,11 +13,18 @@ Includes:
 ```
 ./setup.sh
 ```
+
 Then: 
 
-- Login to 1Password
+- Login to 1Password (important, used for tokens/secrets)
 - Setup KDE/GSConnect
 - `gh auth login`
+
+Once the above is done, start DuckDNS, NGINX, and our app servers with:
+
+```
+./servers.sh
+```
 
 ## Ports
 

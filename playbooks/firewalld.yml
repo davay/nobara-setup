@@ -3,12 +3,20 @@
   hosts: localhost
   become: true
   tasks: 
-    - name: Allow KDE Connect
+    - name: Allow HTTP traffic
       ansible.posix.firewalld:
-        service: kdeconnect
+        service: http
         zone: public
         permanent: yes
-        state: enabled 
+        state: enabled
+        immediate: true
+    
+    - name: Allow HTTPS traffic
+      ansible.posix.firewalld:
+        service: https
+        zone: public
+        permanent: yes
+        state: enabled
         immediate: true
 
     - name: Allow Docker FastAPI (da-band)
@@ -19,3 +27,18 @@
         state: enabled
         immediate: true
 
+    - name: Allow KDE Connect
+      ansible.posix.firewalld:
+        service: kdeconnect
+        zone: public
+        permanent: yes
+        state: enabled 
+        immediate: true
+    
+    - name: Allow MOSH traffic
+      ansible.posix.firewalld:
+        port: 60000-61000/udp
+        zone: public
+        permanent: yes
+        state: enabled
+        immediate: true
