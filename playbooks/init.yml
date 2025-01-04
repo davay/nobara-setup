@@ -1,7 +1,6 @@
 ---
 - name: Initialize system
   hosts: localhost
-  connection: local
   vars:
     installed_gnome_extensions: "{{ lookup('pipe', 'gext list') }}"
   tasks:
