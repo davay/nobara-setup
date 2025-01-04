@@ -25,6 +25,8 @@
         repo: https://github.com/davay/da-band.git
         dest: "{{ base_dir }}/da-band"
         depth: 1
+        update: yes 
+        force: yes
 
     - name: Deploy da-band API server
       ansible.builtin.shell:
