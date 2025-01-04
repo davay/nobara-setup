@@ -5,10 +5,10 @@
     installed_gnome_extensions: "{{ lookup('pipe', 'gext list') }}"
     fedora_version: "{{ lookup('pipe', 'rpm -E %fedora') }}"
   tasks:
-    - name: "Enable Fedora COPRs (chroot: fedora-{{ fedora_version.stdout }}-x86_64)"
+    - name: "Enable Fedora COPRs (chroot: fedora-{{ fedora_version }}-x86_64)"
       community.general.copr:
         name: "{{ item }}"
-        chroot: "fedora-{{ fedora_version.stdout }}-x86_64"
+        chroot: "fedora-{{ fedora_version }}-x86_64"
         state: enabled
       loop: 
           - pgdev/ghostty
