@@ -97,6 +97,15 @@
         state: present
 
   post_tasks: 
+    - name: Start Systemd services
+      ansible.builtin.systemd:
+        name: "{{ item }}"
+        state: started
+        enabled: true
+      become: true
+      loop:
+        - docker.service
+
     - name: Verify NVIDIA Container Toolkit installation
       ansible.builtin.command:
         cmd: docker run --rm --gpus all nvidia/cuda:latest-cudnn-runtime nvidia-smi
