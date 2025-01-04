@@ -20,7 +20,11 @@ Then:
 - Setup KDE/GSConnect
 - `gh auth login`
 
-Once the above is done, start DuckDNS, NGINX, and our app servers with:
+Next is to start DuckDNS, NGINX, and our app servers. 
+
+However, we must first make sure that an A/CNAME record has been created at DNS provider (mine is R53) pointing to DuckDNS. 
+
+Finally:
 
 ```
 ./servers.sh
