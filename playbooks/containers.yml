@@ -4,27 +4,28 @@
 
   vars: 
     user: "{{ ansible_user_id }}"
+    base_dir: "/home/{{ user }}/Repos"
     duckdns_token: "{{ lookup('community.general.onepassword', 'duckdns token', field='token', vault='Personal') }}"
 
   tasks:
     - name: Create DuckDNS .env file
       template:
-        src: templates/docker/duckdns/.env.j2
-        dest: /home/{{ user }}/Repos/nobara-setup/templates/docker/duckdns/.env
+        src: "{{ base_dir }}/nobara-setup/templates/docker/duckdns/.env.j2"
+        dest: "{{ base_dir }}/nobara-setup/templates/docker/duckdns/.env"
 
     - name: Deploy DuckDNS
       community.docker.docker_compose_v2:
-        project_src: /home/{{ user }}/Repos/nobara-setup/templates/docker/duckdns
+        project_src: "{{ base_dir }}/nobara-setup/templates/docker/duckdns"
         state: present
 
     # TODO: use proper container registry
     - name: Clone da-band
       ansible.builtin.git:
         repo: https://github.com/davay/da-band.git
-        dest: /home/{{ user }}/Repos
+        dest: "{{ base_dir }}"
         depth: 1
 
     - name: Deploy da-band API server
       ansible.builtin.shell:
         cmd: ./start.sh
-        chdir: /home/{{ user }}/Repos/da-band/api/
+        chdir: "{{ base_dir }}/da-band/api/"
