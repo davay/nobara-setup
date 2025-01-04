@@ -1,6 +1,7 @@
 ---
 - name: Setup FirewallD
   hosts: localhost
+  connection: local
   become: true
   tasks: 
     - name: Allow KDE Connect traffic
