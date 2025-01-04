@@ -3,13 +3,8 @@
   hosts: localhost
   vars:
     installed_gnome_extensions: "{{ lookup('pipe', 'gext list') }}"
+    fedora_version: "{{ lookup('pipe', 'rpm -E %fedora') }}"
   tasks:
-    - name: Get Fedora version
-      ansible.builtin.command:
-        cmd: rpm -E %fedora
-      register: fedora_version
-      changed_when: false
-    
     - name: "Enable Fedora COPRs (chroot: fedora-{{ fedora_version.stdout }}-x86_64)"
       community.general.copr:
         name: "{{ item }}"
@@ -26,14 +21,22 @@
         state: present
       become: true
 
-    - name: Add 1Password repository
+    - name: Add repositories
       ansible.builtin.yum_repository:
-        name: 1password
-        description: 1Password Repository
-        baseurl: https://downloads.1password.com/linux/rpm/stable/$basearch
+        name: "{{ item.name }}"
+        description: "{{ item.description }}"
+        baseurl: "{{ item.baseurl }}"
         enabled: true
-        gpgcheck: true
-        gpgkey: https://downloads.1password.com/linux/keys/1password.asc
+        gpgcheck: "{{ item.gpgcheck | default(true) }}"
+        gpgkey: "{{ item.gpgkey | default(omit) }}"
+      loop:
+        - name: 1password
+          description: 1Password Repository
+          baseurl: https://downloads.1password.com/linux/rpm/stable/$basearch
+          gpgkey: https://downloads.1password.com/linux/keys/1password.asc
+        - name: nvidia-container-toolkit
+          description: NVIDIA Container Toolkit Repository
+          baseurl: https://nvidia.github.io/libnvidia-container/stable/rpm
       become: true
     
     - name: Install DNF packages
@@ -51,6 +54,8 @@
         - 1password
         - git-credential-libsecret
         - gh
+        - nvidia-container-toolkit
+        - docker
       become: true
 
     - name: Install Oh-My-Zsh
@@ -91,6 +96,13 @@
         state: present
 
   post_tasks: 
+    - name: Verify NVIDIA Container Toolkit installation
+      ansible.builtin.command:
+        cmd: docker run --rm --gpus all nvidia/cuda:latest-cudnn-runtime nvidia-smi
+      register: nvidia_test
+      changed_when: false
+      become: true
+
     - name: Display final message
       vars:
         msg: |
@@ -98,6 +110,9 @@
 
              For GNOME extension changes to take effect,
              please log out and log back in
+
+             NVIDIA Container Toolkit test results:
+             {{ nvidia_test.stdout if nvidia_test.stdout is defined else 'Test failed' }}
 
              ===========================================
       debug:
