@@ -1,6 +1,5 @@
 - name: Copy dotfiles
   hosts: localhost
-  connection: local
   tasks:
   - name: Copy root dotfiles
     ansible.builtin.get_url:
