@@ -6,6 +6,6 @@ services:
     network_mode: host
     environment:
       - TZ=America/Los_Angeles
-      - SUBDOMAINS=api
+      - SUBDOMAINS=da-nobara
       - TOKEN=${DUCKDNS_TOKEN}
     restart: unless-stopped
