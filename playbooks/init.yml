@@ -134,16 +134,17 @@
     - name: Display final message
       vars:
         msg: |
-             ==============================================================================
+             ============================================================================================
             
-             For GNOME extension and Docker group membership changes
-             to take effect, please log out and log back in
-  
-             ==============================================================================
+             Setup is complete. A reboot is recommended:   
+             1. For GNOME extension changes to take effect, you must at least log out and log back in. 
+             2. For Docker group membership changes to take effect, either reboot or run `newgrp docker`.
+            
+             =============================================================================================
 
              NVIDIA Container Toolkit test results:
              {{ nvidia_test.stdout if nvidia_test.stdout is defined else 'Test failed' }}
 
-             ==============================================================================
+             =============================================================================================
       debug:
         msg: "{{ msg.split('\n') }}"
