@@ -1,7 +1,6 @@
 ---
 - name: Setup NGINX
   hosts: localhost
-  become: true
   vars:
     domain: api.devinl.im
     email: davay@devinl.im
@@ -13,25 +12,30 @@
           - certbot
           - python3-certbot-nginx
         state: present
+      become: true
     
     - name: Copy nginx.conf
       template: 
         src: ~/Repos/nobara-setup/templates/nginx.conf
         dest: /etc/nginx/nginx.conf
+      become: true
     
     - name: Enable and start NGINX service
       systemd:
         name: nginx
         enabled: yes
         state: started
+      become: true
 
     - name: Obtain SSL cert
       command: > 
         certbot --nginx -d {{ domain }} 
         --non-interactive --agree-tos 
         --email {{ email }}
+      become: true
 
     - name: Reload NGINX service to apply SSL changes
       systemd:
         name: nginx
         state: reloaded
+      become: true
