@@ -2,7 +2,7 @@
 - name: Start DuckDNS and other server containers
   hosts: localhost
 
-  vars:   
+  environment:   
     duckdns_token: "{{ lookup('community.general.onepassword', 'duckdns token', field='token', vault='Personal') }}"
 
   tasks:
@@ -10,8 +10,6 @@
       community.docker.docker_compose_v2:
         project_src: /home/{{ ansible_user_id }}/Repos/nobara-setup/templates/docker/duckdns
         state: present
-        environment:
-          DUCKDNS_TOKEN: "{{ duckdns_token }}"
 
     # TODO: use proper container registry
     - name: Clone da-band
