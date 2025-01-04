@@ -81,11 +81,13 @@
         - paperwm@paperwm.github.com
         - gsconnect@andyholmes.github.io
       changed_when: item not in installed_gnome_extensions
-    
-    - name: Display logout message
-      debug:
-        msg: |+
-          ===========================================
-          For GNOME extension changes to take effect,
-          please log out and log back in
-          ===========================================
+
+  post_tasks: 
+    - name: Display final message
+      pause:
+        seconds: 1
+        prompt: |
+            ===========================================
+            For GNOME extension changes to take effect,
+            please log out and log back in
+            ===========================================
