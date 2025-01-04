@@ -1,12 +1,8 @@
 ---
 - name: Initialize system
   hosts: localhost
-  pre_tasks:
-  - name: Get installed GNOME extensions
-    ansible.builtin.command:
-      cmd: gext list
-    register: installed_gnome_extensions
-    changed_when: false
+  vars:
+    installed_gnome_extensions: "{{ lookup('pipe', 'gext list') }}"
   tasks:
     - name: Get Fedora version
       ansible.builtin.command:
