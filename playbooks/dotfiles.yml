@@ -9,3 +9,4 @@
       - .zshrc
       - .zshrc_portable
       - .p10k.zsh
+      - .gitconfig

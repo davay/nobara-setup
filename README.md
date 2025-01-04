@@ -13,6 +13,9 @@ Includes:
 ```
 ./setup.sh
 ```
+Then: 
+
+- Login to 1Password
 
 ## Ports
 
