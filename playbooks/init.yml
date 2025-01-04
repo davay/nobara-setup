@@ -80,7 +80,7 @@
       loop:
         - paperwm@paperwm.github.com
         - gsconnect@andyholmes.github.io
-      when: item not in installed_gnome_extensions
+      changed_when: item not in installed_gnome_extensions
     
     - name: Display logout message
       debug:
