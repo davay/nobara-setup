@@ -17,6 +17,7 @@ Then:
 
 - Login to 1Password
 - Setup KDE/GSConnect
+- `gh auth login`
 
 ## Ports
 
