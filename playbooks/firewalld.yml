@@ -3,10 +3,19 @@
   hosts: localhost
   become: true
   tasks: 
-    - name: Allow KDE Connect traffic
+    - name: Allow KDE Connect
       ansible.posix.firewalld:
         service: kdeconnect
         zone: public
         permanent: yes
         state: enabled 
         immediate: true
+
+    - name: Allow Docker FastAPI (da-band)
+      ansible.posix.firewalld:
+        port: 8000/tcp
+        zone: public
+        permanent: yes
+        state: enabled
+        immediate: true
+
