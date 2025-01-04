@@ -1,10 +1,13 @@
 ---
 - name: Initialize system
   hosts: localhost
+
   vars:
+
     installed_gnome_extensions: "{{ lookup('pipe', 'gext list') }}"
     fedora_version: "{{ lookup('pipe', 'rpm -E %fedora') }}"
-  tasks:
+
+  pre_tasks:
     - name: "Enable Fedora COPRs (chroot: fedora-{{ fedora_version }}-x86_64)"
       community.general.copr:
         name: "{{ item }}"
@@ -39,7 +42,8 @@
           baseurl: https://nvidia.github.io/libnvidia-container/stable/rpm/$basearch
           gpgkey: https://nvidia.github.io/libnvidia-container/gpgkey
       become: true
-    
+
+  tasks:
     - name: Install DNF packages
       ansible.builtin.dnf:
         name: "{{ item }}"
@@ -60,6 +64,19 @@
         - docker-compose
       become: true
 
+    - name: Create docker group
+      ansible.builtin.group:
+        name: docker
+        state: present
+      become: true
+
+    - name: Add user to docker group
+      ansible.builtin.user:
+        name: "{{ ansible_user_id }}"
+        groups: docker
+        append: yes
+      become: true
+
     - name: Install Oh-My-Zsh
       ansible.builtin.git:
         repo: https://github.com/ohmyzsh/ohmyzsh.git
@@ -71,12 +88,6 @@
         repo: https://github.com/romkatv/powerlevel10k.git
         dest: /home/{{ ansible_user_id }}/powerlevel10k
         depth: 1
-
-    - name: Change user shell to Zsh 
-      ansible.builtin.user:
-        name: "{{ ansible_user_id }}"
-        shell: /bin/zsh
-      become: true
 
     - name: Install gnome-extensions-cli
       ansible.builtin.pip:
@@ -107,6 +118,12 @@
       loop:
         - docker.service
 
+    - name: Change user shell to Zsh 
+      ansible.builtin.user:
+        name: "{{ ansible_user_id }}"
+        shell: /bin/zsh
+      become: true
+
     - name: Verify NVIDIA Container Toolkit installation
       ansible.builtin.command:
         cmd: docker run --rm --gpus all nvidia/cuda:12.6.3-cudnn-runtime-ubuntu24.04 nvidia-smi
@@ -118,9 +135,9 @@
       vars:
         msg: |
              ==============================================================================
-
-             For GNOME extension changes to take effect,
-             please log out and log back in
+            
+             For GNOME extension and Docker group membership changes
+             to take effect, please log out and log back in
   
              ==============================================================================
 
