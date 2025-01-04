@@ -82,6 +82,12 @@
         - gsconnect@andyholmes.github.io
       changed_when: item not in installed_gnome_extensions
 
+    - name: Swap Caps Lock and Escape
+      community.general.dconf:
+        key: "/org/gnome/desktop/input-sources/xkb-options"
+        value: "['caps:escape']"
+        state: present
+
   post_tasks: 
     - name: Display final message
       vars:
