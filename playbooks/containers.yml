@@ -22,7 +22,7 @@
     - name: Clone da-band
       ansible.builtin.git:
         repo: https://github.com/davay/da-band.git
-        dest: "{{ base_dir }}"
+        dest: "{{ base_dir }}/da-band"
         depth: 1
 
     - name: Deploy da-band API server
