@@ -9,13 +9,13 @@
     runner_token: "{{ lookup('community.general.onepassword', 'GitHub Actions Self-Hosted Runner - da-mac', field='credential', vault='Personal') }}"
 
   tasks:
-    - name: Create runner directory
+    - name: Create directory
       ansible.builtin.file:
         path: "{{ runner_folder }}"
         state: directory
         mode: '0755'
 
-    - name: Download GitHub Actions runner package
+    - name: Download runner package
       ansible.builtin.get_url:
         url: "https://github.com/actions/runner/releases/download/v{{ runner_version }}/{{ runner_package }}"
         dest: "{{ runner_folder }}/{{ runner_package }}"
@@ -34,12 +34,24 @@
         chdir: "{{ runner_folder }}"
       ignore_errors: true  # in case it's not configured yet
 
-    - name: Configure GitHub Runner
+    - name: Configure runner
       ansible.builtin.command: "./config.sh --url https://github.com/davay/da-band --token {{ runner_token }}"
       args:
         chdir: "{{ runner_folder }}"
 
-    - name: Start the runner
-      ansible.builtin.command: "./run.sh"
+    - name: Install Systemd service
+      ansible.builtin.command: "./svc.sh install"
       args:
         chdir: "{{ runner_folder }}"
+      become: true
+
+    - name: Start Systemd service
+      ansible.builtin.command: "./svc.sh start"
+      args:
+        chdir: "{{ runner_folder }}"
+      become: true
+
+    - name: Clean up downloaded archive
+      ansible.builtin.file:
+        path: "{{ runner_folder }}/{{ runner_package }}"
+        state: absent
