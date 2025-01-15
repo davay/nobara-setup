@@ -1,0 +1,34 @@
+---
+- name: Setup GitHub Actions Self-Hosted Runner
+  hosts: localhost
+
+  vars:
+    runner_version: "2.321.0"
+    runner_package: "actions-runner-linux-x64-{{ runner_version }}.tar.gz"
+    runner_folder: "~/actions-runner"
+    runner_token: "{{ lookup('community.general.onepassword', 'GitHub Actions Self-Hosted Runner - da-mac', field='credential', vault='Personal') }}"
+
+  tasks:
+    - name: Create runner directory
+      ansible.builtin.file:
+        path: "{{ runner_folder }}"
+        state: directory
+        mode: '0755'
+
+    - name: Download GitHub Actions runner package
+      ansible.builtin.get_url:
+        url: "https://github.com/actions/runner/releases/download/v{{ runner_version }}/{{ runner_package }}"
+        dest: "{{ runner_folder }}/{{ runner_package }}"
+        mode: '0644'
+
+    - name: Extract runner package
+      ansible.builtin.unarchive:
+        src: "{{ runner_folder }}/{{ runner_package }}"
+        dest: "{{ runner_folder }}"
+        remote_src: yes
+        creates: "{{ runner_folder }}/run.sh"
+
+    - name: Configure GitHub Runner
+      ansible.builtin.command: "./config.sh --url https://github.com/davay/da-band --token {{ runner_token }}"
+      args:
+        chdir: "{{ runner_folder }}"
