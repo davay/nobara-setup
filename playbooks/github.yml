@@ -32,3 +32,8 @@
       ansible.builtin.command: "./config.sh --url https://github.com/davay/da-band --token {{ runner_token }}"
       args:
         chdir: "{{ runner_folder }}"
+
+    - name: Start the runner
+      ansible.builtin.command: "./run.sh"
+      args:
+        chdir: "{{ runner_folder }}"
