@@ -28,6 +28,12 @@
         remote_src: yes
         creates: "{{ runner_folder }}/run.sh"
 
+    - name: Remove existing runner configuration
+      ansible.builtin.command: "./config.sh remove"
+      args:
+        chdir: "{{ runner_folder }}"
+      ignore_errors: true  # in case it's not configured yet
+
     - name: Configure GitHub Runner
       ansible.builtin.command: "./config.sh --url https://github.com/davay/da-band --token {{ runner_token }}"
       args:
