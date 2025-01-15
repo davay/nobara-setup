@@ -5,7 +5,7 @@
   vars:
     runner_version: "2.321.0"
     runner_package: "actions-runner-linux-x64-{{ runner_version }}.tar.gz"
-    runner_folder: "~/actions-runner"
+    runner_folder: "/home/{{ ansible_user_id }}/actions-runner"
     runner_token: "{{ lookup('community.general.onepassword', 'GitHub Actions Self-Hosted Runner - da-mac', field='credential', vault='Personal') }}"
 
   tasks:
