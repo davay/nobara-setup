@@ -29,7 +29,7 @@
         creates: "{{ runner_folder }}/run.sh"
 
     - name: Remove existing runner configuration
-      ansible.builtin.command: "./config.sh remove"
+      ansible.builtin.command: "./config.sh remove --token {{ runner_token }}"
       args:
         chdir: "{{ runner_folder }}"
       ignore_errors: true  # in case it's not configured yet
