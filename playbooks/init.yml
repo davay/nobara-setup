@@ -6,6 +6,7 @@
     installed_gnome_extensions: "{{ lookup('pipe', 'gext list') }}"
     fedora_version: "{{ lookup('pipe', 'rpm -E %fedora') }}"
     user: "{{ ansible_user_id }}"
+    base_dir: "/home/{{ user }}/Repos"
 
   pre_tasks:
     - name: "Enable Fedora COPRs (chroot: fedora-{{ fedora_version }}-x86_64)"
@@ -109,6 +110,17 @@
         key: "/org/gnome/desktop/input-sources/xkb-options"
         value: "['caps:escape']"
         state: present
+
+    - name: Create autostart directory
+      ansible.builtin.file:
+        path: "/home/{{ user }}/.config/autostart"
+        state: directory
+        mode: '0755'
+
+    - name: Autostart 1Password
+      ansible.builtin.copy:
+        src: "{{ base_dir }}/nobara-setup/templates/1password.desktop"
+        dest: "/home/{{ user }}/.config/autostart/1password.desktop"
 
   post_tasks: 
     - name: Start Systemd services
