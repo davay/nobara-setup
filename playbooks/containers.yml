@@ -6,6 +6,7 @@
     user: "{{ ansible_user_id }}"
     base_dir: "/home/{{ user }}/Repos"
     duckdns_token: "{{ lookup('community.general.onepassword', 'duckdns token', field='token', vault='Personal') }}"
+    soft_serve_initial_admin_keys: "{{ lookup('community.general.onepassword', 'Git', field='public key', vault='Personal') }}"
 
   tasks:
     - name: Create DuckDNS .env file
@@ -16,6 +17,16 @@
     - name: Deploy DuckDNS
       community.docker.docker_compose_v2:
         project_src: "{{ base_dir }}/nobara-setup/templates/docker/duckdns"
+        state: present
+    
+    - name: Create Soft-Serve .env file
+      template:
+        src: "{{ base_dir }}/nobara-setup/templates/docker/soft-serve/.env.j2"
+        dest: "{{ base_dir }}/nobara-setup/templates/docker/soft-serve/.env"
+
+    - name: Deploy Soft-Serve
+      community.docker.docker_compose_v2:
+        project_src: "{{ base_dir }}/nobara-setup/templates/docker/soft-serve"
         state: present
 
     # TODO: use proper container registry
