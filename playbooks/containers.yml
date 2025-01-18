@@ -31,7 +31,7 @@
 
     - name: Copy Soft-Serve config
       template:
-        src: "{{ base_dir }}/nobara-setup/templates/docker/soft-serve/config.yaml"
+        src: "{{ base_dir }}/nobara-setup/templates/docker/soft-serve/config.yaml.j2"
         dest: "/opt/soft-serve/config.yaml"
 
     # TODO: use proper container registry
