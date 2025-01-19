@@ -14,6 +14,7 @@
         state: present
       loop:
         - nginx
+        - nginx-mod-stream
         - certbot
         - python3-certbot-nginx
       become: true
@@ -46,5 +47,6 @@
           --non-interactive --agree-tos 
           --email {{ email }}
           --redirect
+          --expand
       become: true
       when: cert_exists.results | map(attribute='stat.exists') | select | list | length < domains | length
