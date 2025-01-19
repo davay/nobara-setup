@@ -7,7 +7,7 @@ echo
 (
     export ANSIBLE_BECOME_PASS="$PASS"
     ansible-playbook ./playbooks/containers.yml && \
-    ansible-playbook ./playbooks/nginx.yml && \
     ansible-playbook ./playbooks/firewalld.yml && \
+    ansible-playbook ./playbooks/nginx.yml && \
     ansible-playbook ./playbooks/github.yml
 )
