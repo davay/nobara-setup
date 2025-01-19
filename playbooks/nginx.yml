@@ -29,7 +29,7 @@
         state: started
       become: true
 
-    - name: Obtain SSL cert for {{ domain }}
+    - name: "Obtain SSL cert for {{ domain }}"
       command: > 
         certbot --nginx -d {{ domain }} 
         --non-interactive --agree-tos 
