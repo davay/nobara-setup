@@ -26,6 +26,7 @@ However, we must first make sure that:
 
 - An A/CNAME record has been created at DNS provider (mine is R53) pointing to DuckDNS. 
 - Port forwarding rules are setup on the router for 80->80 and 443->443.
+    - Don't forget the other soft-serve ports
 
 Finally:
 
@@ -33,7 +34,7 @@ Finally:
 ./servers.sh
 ```
 
-To summarize the full flow: 
+To summarize the full flow (using api.devinl.im as example): 
 
 1. Client --Request api.devinl.im--> AWS Route53
 2. AWS Route53 --CNAME (da-nobara.duckdns.org)--> Client
@@ -43,6 +44,11 @@ To summarize the full flow:
 6. Home router --Forward request--> Machine local IP
 7. Machine's NGINX --Listen on 80/443--> Proxy request to localhost:8000
 8. FastAPI/Uvicorn --Listen on 0.0.0.0:8000--> Process request and respond
+
+Domains setup with this:
+
+- api.devinl.im
+- git.devinl.im
 
 ## Ports
 

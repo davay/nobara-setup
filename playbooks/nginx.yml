@@ -14,7 +14,6 @@
         state: present
       loop:
         - nginx
-        - nginx-mod-stream
         - certbot
         - python3-certbot-nginx
       become: true
