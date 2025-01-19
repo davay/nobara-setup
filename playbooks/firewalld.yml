@@ -43,7 +43,7 @@
         state: enabled
         immediate: true
 
-    - name: Allow Soft-Serve (git) traffic
+    - name: Allow Soft-Serve traffic
       ansible.posix.firewalld:
         port: "{{ item }}/tcp"
         zone: public
