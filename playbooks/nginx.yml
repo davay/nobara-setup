@@ -47,4 +47,4 @@
           --email {{ email }}
           --redirect
       become: true
-      when: not (cert_exists.results | map(attribute='stat.exists') | list | all)
+      when: cert_exists.results | map(attribute='stat.exists') | select | list | length < domains | length
