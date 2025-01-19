@@ -42,3 +42,17 @@
         permanent: yes
         state: enabled
         immediate: true
+
+    - name: Allow Soft-Serve (git) traffic
+      ansible.posix.firewalld:
+        port: "{{ item }}/tcp"
+        zone: public
+        permanent: yes
+        state: enabled
+        immediate: true
+      loop:
+        - 23231
+        - 23232
+        - 23233
+        - 9418
+

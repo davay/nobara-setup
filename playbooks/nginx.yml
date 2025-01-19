@@ -36,3 +36,4 @@
         --email {{ email }}
         --redirect
       become: true
+      creates: /etc/letsencrypt/live/{{ domain }}/fullchain.pem
