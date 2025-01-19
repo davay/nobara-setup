@@ -19,6 +19,8 @@ Then:
 - Login to 1Password (important, used for tokens/secrets)
 - Setup KDE/GSConnect
 - `gh auth login`
+- Setup Emby Server (go to localhost:8096)
+    - The backup and restore plugin is in the paid version, and manual backup is TODO
 
 Next is to start DuckDNS, NGINX, and our app servers. 
 
