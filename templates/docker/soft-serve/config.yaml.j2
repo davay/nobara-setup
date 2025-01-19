@@ -112,17 +112,5 @@ jobs:
   mirror_pull: "@every 10m"
 
 # Additional admin keys.
-#initial_admin_keys:
-#  - "ssh-rsa AAAAB3NzaC1yc2..."
-
-# Access level for anonymous users. Available options are no-access, read-only, read-write, and admin-access. Default is read-only.
-# anon-access: "admin-access"
-
-# Whether to allow connections that doesn't use keys to pass. Setting this to false would disable access to SSH keyboard-interactive, HTTP, and Git protocol connections. Default is true.
-# allow-keyless: true
-
-users:
-  - name: davay
-    admin: true
-    public-keys:
-    - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILBr0MpamPBoVwe/5qIDwes2Z7aAKORlgcqjwy2scgCJ
+initial_admin_keys:
+  - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILBr0MpamPBoVwe/5qIDwes2Z7aAKORlgcqjwy2scgCJ"
