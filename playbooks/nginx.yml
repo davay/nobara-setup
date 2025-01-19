@@ -30,9 +30,11 @@
       become: true
 
     - name: Obtain SSL cert for {{ domain }}
-      command: > 
-        certbot --nginx -d {{ domain }} 
-        --non-interactive --agree-tos 
-        --email {{ email }}
-        --redirect
+      ansible.builtin.command: 
+        cmd: > 
+          certbot --nginx -d {{ domain }} 
+          --non-interactive --agree-tos 
+          --email {{ email }}
+          --redirect
+        creates: /etc/letsencrypt/live/{{ domain }}/fullchain.pem
       become: true
