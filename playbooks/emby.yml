@@ -4,14 +4,30 @@
   become: true
 
   tasks:
+    - name: Get latest Emby release info
+      ansible.builtin.uri:
+        url: https://api.github.com/repos/MediaBrowser/Emby.Releases/releases/latest
+        return_content: yes
+      register: github_response
+
+    - name: Set version fact
+      ansible.builtin.set_fact:
+        emby_version: "{{ github_response.json.tag_name | regex_replace('^v', '') }}"
+
+    - name: Construct download URL
+      ansible.builtin.set_fact:
+        download_url: "https://github.com/MediaBrowser/Emby.Releases/releases/download/{{ emby_version }}/emby-server-rpm_{{ emby_version }}_x86_64.rpm"
+
     - name: Install Emby Server
       ansible.builtin.dnf:
-        name: "https://github.com/MediaBrowser/Emby.Releases/releases/latest/download/emby-server-rpm_x86_64.rpm"
+        name: "{{ download_url }}"
         state: present
-        disable_gpg_check: true
+        disable_gpg_check: yes
+      become: true
 
-    - name: Start Systemd Service
+    - name: Start Systemd service
       ansible.builtin.systemd:
         name: emby-server
         enabled: yes
         state: started
+      become: true
