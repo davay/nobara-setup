@@ -3,7 +3,9 @@
   hosts: localhost
   vars:
     user: "{{ ansible_user_id }}"
-    domain: api.devinl.im
+    domains:
+      - api.devinl.im
+      - git.devinl.im
     email: davay@devinl.im
   tasks: 
     - name: Install NGINX and Certbot
@@ -17,13 +19,20 @@
       become: true
     
     - name: Copy nginx.conf
-      template: 
+      ansible.builtin.template: 
         src: /home/{{ user }}/Repos/nobara-setup/templates/nginx.conf
         dest: /etc/nginx/nginx.conf
       become: true
     
+    - name: Check if certificates exist
+      ansible.builtin.stat:
+        path: "/etc/letsencrypt/live/{{ item }}/fullchain.pem"
+      register: cert_exists
+      loop: "{{ domains }}"
+      become: true
+
     - name: Enable and start NGINX service
-      systemd:
+      ansible.builtin.systemd:
         name: nginx
         enabled: yes
         state: started
@@ -32,9 +41,10 @@
     - name: Obtain SSL cert for {{ domain }}
       ansible.builtin.command: 
         cmd: > 
-          certbot --nginx -d {{ domain }} 
+          certbot --nginx 
+          {% for domain in domains %}-d {{ domain }} {% endfor %}
           --non-interactive --agree-tos 
           --email {{ email }}
           --redirect
-        creates: /etc/letsencrypt/live/{{ domain }}/fullchain.pem
       become: true
+      when: cert_exists.results | map(attribute='stat.exists') | list | contains(false)

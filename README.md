@@ -46,6 +46,9 @@ To summarize the full flow:
 
 ## Ports
 
-| Port | App     |
-| ---- | ------- |
-| TODO     |         |
+| Port  | App               |
+| ----- | ----------------- |
+| 8000  | FastAPI           |
+| 9418  | Soft-Serve (git)  |
+| 23231 | Soft-Serve (ssh)  |
+| 23232 | Soft-Serve (http) |
