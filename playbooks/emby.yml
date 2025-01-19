@@ -1,0 +1,17 @@
+---
+- name: Install Emby Server
+  hosts: localhost
+  become: true
+
+  tasks:
+    - name: Install Emby Server
+      ansible.builtin.dnf:
+        name: "https://github.com/MediaBrowser/Emby.Releases/releases/latest/download/emby-server-rpm_x86_64.rpm"
+        state: present
+        disable_gpg_check: true
+
+    - name: Start Systemd Service
+      ansible.builtinsystemd:
+        name: emby-server
+        enabled: yes
+        state: started
