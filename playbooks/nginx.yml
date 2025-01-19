@@ -38,7 +38,7 @@
         state: started
       become: true
 
-    - name: Obtain SSL cert for {{ domain }}
+    - name: Obtain SSL cert for domains
       ansible.builtin.command: 
         cmd: > 
           certbot --nginx 
@@ -47,4 +47,4 @@
           --email {{ email }}
           --redirect
       become: true
-      when: cert_exists.results | map(attribute='stat.exists') | list | contains(false)
+      when: not cert_exists.results | map(attribute='stat.exists') | list | all
