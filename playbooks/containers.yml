@@ -24,16 +24,16 @@
         src: "{{ base_dir }}/nobara-setup/templates/docker/soft-serve/.env.j2"
         dest: "{{ base_dir }}/nobara-setup/templates/docker/soft-serve/.env"
 
-    - name: Deploy Soft-Serve
-      community.docker.docker_compose_v2:
-        project_src: "{{ base_dir }}/nobara-setup/templates/docker/soft-serve"
-        state: present
-
     - name: Copy Soft-Serve config
       template:
         src: "{{ base_dir }}/nobara-setup/templates/docker/soft-serve/config.yaml.j2"
         dest: "/opt/soft-serve/config.yaml"
       become: true
+
+    - name: Deploy Soft-Serve
+      community.docker.docker_compose_v2:
+        project_src: "{{ base_dir }}/nobara-setup/templates/docker/soft-serve"
+        state: present
 
     # TODO: use proper container registry
     - name: Clone da-band
