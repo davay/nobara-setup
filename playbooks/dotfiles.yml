@@ -1,11 +1,7 @@
 - name: Copy dotfiles
   hosts: localhost
-  tasks:
-  - name: Copy dotfiles
-    ansible.builtin.get_url:
-      url: "https://raw.githubusercontent.com/davay/dotfiles/main/{{ item }}"
-      dest: "/home/{{ ansible_user_id }}/{{ item }}"
-    loop:
+  vars: 
+    dotfiles:
       - .zshrc
       - .zshrc_portable
       - .p10k.zsh
@@ -14,3 +10,18 @@
       - .gitconfig_linux
       - .ssh/config
       - .config/1Password/ssh/agent.toml
+
+  tasks:
+  - name: Create directories
+    ansible.builtin.file:
+      path: "/home/{{ ansible_user_id }}/{{ item | dirname }}"
+      state: directory
+    loop: "{{ dotfiles }}"
+    when: "'/' in item"
+
+  - name: Copy dotfiles
+    ansible.builtin.get_url:
+      url: "https://raw.githubusercontent.com/davay/dotfiles/main/{{ item }}"
+      dest: "/home/{{ ansible_user_id }}/{{ item }}"
+      force: true
+    loop: "{{ dotfiles }}"
