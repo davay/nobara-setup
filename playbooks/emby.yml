@@ -11,7 +11,7 @@
         disable_gpg_check: true
 
     - name: Start Systemd Service
-      ansible.builtinsystemd:
+      ansible.builtin.systemd:
         name: emby-server
         enabled: yes
         state: started
