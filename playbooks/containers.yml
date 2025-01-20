@@ -38,7 +38,7 @@
     # TODO: use proper container registry
     - name: Clone da-band
       ansible.builtin.git:
-        version: api # TODO: should be main once ready
+        version: main
         repo: https://github.com/davay/da-band.git
         dest: "{{ base_dir }}/da-band"
         depth: 1
