@@ -42,6 +42,11 @@
           description: NVIDIA Container Toolkit Repository
           baseurl: https://nvidia.github.io/libnvidia-container/stable/rpm/$basearch
           gpgkey: https://nvidia.github.io/libnvidia-container/gpgkey
+        - name: mullvad
+          description: Mullvad VPN Repository
+          baseurl: https://repository.mullvad.net/rpm/stable/$basearch
+          gpgkey: https://repository.mullvad.net/rpm/mullvad-gpg.asc
+
       become: true
 
   tasks:
@@ -65,6 +70,8 @@
         - docker
         - docker-compose
         - mosh
+        - qbittorrent
+        - mullvad-vpn
       become: true
 
     - name: Create docker group
