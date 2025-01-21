@@ -22,7 +22,7 @@ Then:
 - Setup Emby Server (go to localhost:8096)
     - The backup and restore plugin is in the paid version, and manual backup is TODO
 - Login to Mullvad, enable autostart, lockdown mode, local network sharing
-- Set password for qBt
+- Enable Web UI for qBt, set password
 
 Next is to start DuckDNS, NGINX, and our app servers. 
 
