@@ -128,6 +128,11 @@
       ansible.builtin.copy:
         src: "{{ base_dir }}/nobara-setup/templates/1password.desktop"
         dest: "/home/{{ user }}/.config/autostart/1password.desktop"
+    
+    - name: Autostart qBittorrent
+      ansible.builtin.copy:
+        src: "{{ base_dir }}/nobara-setup/templates/qbittorrent.desktop"
+        dest: "/home/{{ user }}/.config/autostart/qbittorrent.desktop"
 
   post_tasks: 
     - name: Start Systemd services
