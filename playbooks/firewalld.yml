@@ -56,3 +56,18 @@
         - 23233
         - 9418
 
+    - name: Allow Emby traffic
+      ansible.posix.firewalld:
+        port: 8096/tcp
+        zone: public
+        permanent: yes
+        state: enabled
+        immediate: true
+    
+    - name: Allow qBittorrent traffic
+      ansible.posix.firewalld:
+        port: 8080/tcp
+        zone: public
+        permanent: yes
+        state: enabled
+        immediate: true

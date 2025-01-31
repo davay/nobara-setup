@@ -21,6 +21,8 @@ Then:
 - `gh auth login`
 - Setup Emby Server (go to localhost:8096)
     - The backup and restore plugin is in the paid version, and manual backup is TODO
+- Login to Mullvad, enable autostart, lockdown mode, local network sharing
+- Enable Web UI for qBt, set password
 
 Next is to start DuckDNS, NGINX, and our app servers. 
 
@@ -51,6 +53,8 @@ Domains setup with this:
 
 - api.devinl.im
 - git.devinl.im
+- emby.devinl.im
+- torrent.devinl.im
 
 ## Ports
 
@@ -60,3 +64,12 @@ Domains setup with this:
 | 9418  | Soft-Serve (git)  |
 | 23231 | Soft-Serve (ssh)  |
 | 23232 | Soft-Serve (http) |
+
+## General steps to adding a new subdomain
+
+- Add in nginx.conf
+- Open firewall
+- Make CNAME record in Route53
+- Setup port forwarding
+- Add domain in nginx.yml for cert
+- Make sure the service is enabled / auto-retries
