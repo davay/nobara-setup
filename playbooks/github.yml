@@ -43,7 +43,7 @@
           ignore_errors: true  # in case it's not configured yet
 
         - name: Configure runner
-          ansible.builtin.command: "./config.sh --url https://github.com/davay/da-band --token {{ runner_token }}"
+          ansible.builtin.command: "./config.sh --url https://github.com/davay/da-band --token {{ runner_token }} --unattended"
           args:
             chdir: "{{ runner_folder }}"
 
