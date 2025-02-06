@@ -43,6 +43,14 @@
         state: enabled
         immediate: true
 
+    - name: Allow SSH traffic
+      ansible.posix.firewalld:
+        service: ssh
+        zone: public
+        permanent: yes
+        state: enabled
+        immediate: true
+
     - name: Allow Soft-Serve traffic
       ansible.posix.firewalld:
         port: "{{ item }}/tcp"

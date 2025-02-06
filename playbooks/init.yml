@@ -72,6 +72,7 @@
         - mosh
         - qbittorrent
         - mullvad-vpn
+        - openssh-server
       become: true
 
     - name: Create docker group
@@ -143,6 +144,7 @@
       become: true
       loop:
         - docker.service
+        - sshd.service
 
     - name: Change user shell to Zsh 
       ansible.builtin.user:
