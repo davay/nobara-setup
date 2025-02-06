@@ -73,6 +73,8 @@
         - qbittorrent
         - mullvad-vpn
         - openssh-server
+        - luarocks
+        - python3-neovim
       become: true
 
     - name: Create docker group
