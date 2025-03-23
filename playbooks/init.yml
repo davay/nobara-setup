@@ -75,6 +75,7 @@
         - openssh-server
         - luarocks
         - python3-neovim
+        - bat
       become: true
 
     - name: Create docker group
