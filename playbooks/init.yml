@@ -76,6 +76,9 @@
         - python3-notebook
         - nautilus-python
         - nautilus-extensions
+        - luarocks
+        - python3-neovim
+        - bat
       become: true
 
     - name: Create docker group
