@@ -73,6 +73,9 @@
         - qbittorrent
         - mullvad-vpn
         - openssh-server
+        - python3-notebook
+        - nautilus-python
+        - nautilus-extensions
       become: true
 
     - name: Create docker group
