@@ -43,12 +43,20 @@
         state: enabled
         immediate: true
 
-    - name: Allow SSH traffic
+    - name: Allow SSH traffic on port 2222
+      ansible.posix.firewalld:
+        port: 2222/tcp
+        zone: public
+        permanent: yes
+        state: enabled
+        immediate: true
+
+    - name: Remove default SSH service (port 22)
       ansible.posix.firewalld:
         service: ssh
         zone: public
         permanent: yes
-        state: enabled
+        state: disabled
         immediate: true
 
     - name: Allow Soft-Serve traffic

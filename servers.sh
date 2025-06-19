@@ -6,9 +6,9 @@ read -s -p "Sudo password: " PASS
 echo
 (
     export ANSIBLE_BECOME_PASS="$PASS"
+    ansible-playbook ./playbooks/ssh.yml && \
     ansible-playbook ./playbooks/containers.yml && \
     ansible-playbook ./playbooks/firewalld.yml && \
     ansible-playbook ./playbooks/nginx.yml && \
-    ansible-playbook ./playbooks/emby.yml && \
-    ansible-playbook ./playbooks/github.yml
+    ansible-playbook ./playbooks/emby.yml
 )

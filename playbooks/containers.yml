@@ -9,6 +9,13 @@
     soft_serve_initial_admin_keys: "{{ lookup('community.general.onepassword', 'Git', field='public key', vault='Personal') }}"
 
   tasks:
+    - name: Ensure docker service is running
+      systemd:
+        name: docker
+        state: started
+        enabled: yes
+      become: true
+
     - name: Create DuckDNS .env file
       template:
         src: "{{ base_dir }}/nobara-setup/templates/docker/duckdns/.env.j2"
@@ -18,11 +25,19 @@
       community.docker.docker_compose_v2:
         project_src: "{{ base_dir }}/nobara-setup/templates/docker/duckdns"
         state: present
+      become: true
     
     - name: Create Soft-Serve .env file
       template:
         src: "{{ base_dir }}/nobara-setup/templates/docker/soft-serve/.env.j2"
         dest: "{{ base_dir }}/nobara-setup/templates/docker/soft-serve/.env"
+
+    - name: Create Soft-Serve directory
+      file:
+        path: "/opt/soft-serve"
+        state: directory
+        mode: '0755'
+      become: true
 
     - name: Copy Soft-Serve config
       template:
@@ -34,6 +49,7 @@
       community.docker.docker_compose_v2:
         project_src: "{{ base_dir }}/nobara-setup/templates/docker/soft-serve"
         state: present
+      become: true
 
     # TODO: use proper container registry
     - name: Clone da-band
@@ -49,3 +65,4 @@
       ansible.builtin.shell:
         cmd: ./start.sh
         chdir: "{{ base_dir }}/da-band/api/"
+      become: true

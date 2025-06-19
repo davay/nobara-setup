@@ -6,6 +6,5 @@ git clone https://github.com/davay/nobara-setup.git ~/Repos/nobara-setup
 echo
 (
     export ANSIBLE_BECOME_PASS="$PASS"
-    ansible-playbook ./playbooks/init.yml &&
-    ansible-playbook ./playbooks/dotfiles.yml
+    ansible-playbook ./playbooks/init.yml
 )
