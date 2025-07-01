@@ -31,3 +31,8 @@
         enabled: yes
         state: started
       become: true
+
+    - name: Set ACL permissions for Emby user on media directory
+      ansible.builtin.command:
+        cmd: setfacl -m user:emby:rxw /run/media/davay
+      become: true
